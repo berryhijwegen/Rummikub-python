@@ -5,7 +5,7 @@ def all_equal(np_arr, column=0):
 
     Args:
         np_arr (ndarray): NumPy array to check equality for.
-        column (int): Column in defined np_arr to check equality for.
+        column (:obj:`int`): Column in defined np_arr to check equality for.
 
     Returns:
         bool: True if all elements in column are equal, else False.
@@ -18,7 +18,7 @@ def all_unique(np_arr, column=0):
 
     Args:
         np_arr (ndarray): NumPy array to check if all elements are unique.
-        column (int): Column in defined np_arr to check if all elements are unique.
+        column (:obj:`int`): Column in defined np_arr to check if all elements are unique.
 
     Returns:
         bool: True if all elements in column are unique, else False.
@@ -31,7 +31,7 @@ def is_consecutive(np_arr, column=0):
 
     Args:
         np_arr (ndarray): NumPy array to check consecutivity for.
-        column (int): Column in defined np_arr to check consecutivity for.
+        column (:obj:`int`): Column in defined np_arr to check consecutivity for.
 
     Returns:
         bool: True if all elements in column are consecutive, else False.
@@ -45,7 +45,7 @@ def remove_from_arr(np_arr, elements):
     
     Args:
         np_arr (ndarray): NumPy array to check remove given elements from.
-        elements (ndarray/int): Elements to remove from given NumPy array.
+        elements (ndarray/:obj:`int`): Elements to remove from given NumPy array.
 
     Returns:
         bool: New NumPy array with given elements removed. 
@@ -68,10 +68,10 @@ def calculate_score(np_arr):
 
     Args:
         np_arr (ndarray): 2D-NumPy array to check remove given elements from.
-        elements (ndarray/int): Elements to remove from given NumPy array.
+        elements (ndarray/:obj:`int`): Elements to remove from given NumPy array.
 
     Returns:
-        int: Sum of given array.
+        :obj:`int`: Sum of given array.
     
     """
     return np.sum(np_arr[:,0])
