@@ -1,4 +1,3 @@
-import settings
 """
 - 106 stones; 2x 1-13, red, yellow, blue, black + two jokers
 - 2, 3 or 4 players
@@ -21,40 +20,46 @@ Play ends if:
 """
 
 import numpy as np
+
 from player import Player
 from table import Table
+import settings
 
 class Rummikub:
     def __init__(self):
+        """ Rummikub Game initializer. """
+
+        #: :obj:`Table`: Table where the game takes place. 
         self.table = Table()
 
-        self.NUMBERS = np.arange(1, settings.HIGHEST_NUMBER + 1)
-
-        self.STONES_PER_PLAYER = settings.STONES_PER_PLAYER
-
-        """ 0 = red, 1 = yellow, 2 = blue, 3 = black """
-        self.COLORS = np.arange(settings.NUMBER_OF_COLORS)
-
+        #: :obj:`list` of :obj:`Player`: Players that are in the game.
         self.players = [Player(_id, self.table) for _id in range(1, settings.NUMBER_OF_PLAYERS+1)]
 
+    def start(self):
+        """ Starts the game by filling the pot and giving every player a defined amount of stones. """
+        for player in self.players:
+            player.addStones(self.table.pick_stones(settings.STONES_PER_PLAYER))
+   
+    def prepare_table(self):
+        """ Fills the pot attached to the :obj:`Table` with all cards. """
+        NUMBERS = np.arange(1, settings.HIGHEST_NUMBER + 1)
+        COLORS = np.arange(settings.NUMBER_OF_COLORS)
+
         combinations = np.array(np.meshgrid(
-            self.NUMBERS, self.COLORS)).T.reshape(-1, 2)
+            NUMBERS, COLORS)).T.reshape(-1, 2)
+
         all_stones = np.vstack((combinations, combinations))
         jokers = [[99, 99], [99, 99]]
 
         self.table.fill_pot(np.append(all_stones, jokers, axis=0))
 
-    def start(self):
-        for player in self.players:
-            player.addStones(self.table.pick_stones(settings.STONES_PER_PLAYER))
-   
     def __str__(self):
+        """ String which represents :obj:``Rummikub` object when converted to :obj:`str`. """
         userStones = '\n    '.join([f"Player {player._id}: {player.stones.shape[0]} stones " for player in self.players])
-        return f"""Pot: {self.table.pot.shape[0]} stones
-Players:
-    { userStones }
-"""
-    
+        return f"Pot: {self.table.pot.shape[0]} stones" \
+                "Players:" + userStones
+ 
     def __repr__(self):
+        """ String which represents :obj:``Rummikub` object when printed out on CLI. """
         return self.__str__()
         
