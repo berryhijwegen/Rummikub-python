@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def all_equal(np_arr, column=0):
     """ Checks if all elements are equal in the defined column
 
@@ -11,7 +12,8 @@ def all_equal(np_arr, column=0):
         bool: True if all elements in column are equal, else False.
 
     """
-    return np.all(np_arr[:,column] == np_arr[0][column])
+    return np.all(np_arr[:, column] == np_arr[0][column])
+
 
 def all_unique(np_arr, column=0):
     """ Checks if all elements are unique in the defined column
@@ -24,7 +26,8 @@ def all_unique(np_arr, column=0):
         bool: True if all elements in column are unique, else False.
 
     """
-    return np.unique(np_arr[:,column]).size == np_arr[:,column].size
+    return np.unique(np_arr[:, column]).size == np_arr[:, column].size
+
 
 def is_consecutive(np_arr, column=0):
     """ Checks if all elements are consecutivity in the defined column
@@ -37,19 +40,20 @@ def is_consecutive(np_arr, column=0):
         bool: True if all elements in column are consecutive, else False.
 
     """
-    sorted_arr = np.sort(np_arr[:,column])
-    return np.all(np.gradient(sorted_arr)==1)
+    sorted_arr = np.sort(np_arr[:, column])
+    return np.all(np.gradient(sorted_arr) == 1)
+
 
 def remove_from_arr(np_arr, elements):
     """ Remove given elements from given NumPy array.
-    
+
     Args:
         np_arr (ndarray): NumPy array to check remove given elements from.
         elements (ndarray/:obj:`int`): Elements to remove from given NumPy array.
 
     Returns:
         bool: New NumPy array with given elements removed. 
-        
+
     Note: 
         Only removes the first found element for each given element.
 
@@ -60,8 +64,9 @@ def remove_from_arr(np_arr, elements):
             if(np.array_equal(element, element_to_remove)):
                 np_arr = np.delete(np_arr, i, axis=0)
                 break
-    
+
     return np_arr
+
 
 def calculate_score(np_arr):
     """ Calculates the Rummikub score for given NumPy array.
@@ -72,6 +77,6 @@ def calculate_score(np_arr):
 
     Returns:
         :obj:`int`: Sum of given array.
-    
+
     """
-    return np.sum(np_arr[:,0])
+    return np.sum(np_arr[:, 0])
