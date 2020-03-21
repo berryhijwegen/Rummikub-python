@@ -9,7 +9,5 @@ COLOR_MAPPING = {
     99: "joker"
 }
 
-NUMBER_OF_PLAYERS = 3
-
 # - every player starts with 14 stones
 STONES_PER_PLAYER = 14

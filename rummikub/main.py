@@ -1,8 +1,8 @@
-from rummikub import Rummikub
+from game import Game
 import numpy as np
 
 if __name__ == "__main__":
-    rummikub = Rummikub()
+    rummikub = Game()
     rummikub.start()
 
     player_0 = rummikub.players[0]

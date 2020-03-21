@@ -12,22 +12,29 @@ Play ends if:
 """
 
 import numpy as np
+from random import randint
 
 from player import Player
 from table import Table
 import settings
 
 
-class Rummikub:
-    def __init__(self):
+
+class Game:
+    def __init__(self, number_of_players):
         """ Rummikub Game initializer. """
+        self.next_id = 0
+        self.game_id = randint(100000, 999999)
 
         #: :obj:`Table`: Table where the game takes place.
         self.table = Table()
 
         #: :obj:`list` of :obj:`Player`: Players that are in the game.
-        self.players = [Player(_id, self.table)
-                        for _id in range(1, settings.NUMBER_OF_PLAYERS+1)]
+        self.players = []
+
+    def add_player(self, username):
+        self.players.append(Player(self.next_id, username, self.table))
+        self.next_id += 1
 
     def start(self):
         """ Starts the game by filling the pot and giving every player a defined amount of stones. """
@@ -48,13 +55,26 @@ class Rummikub:
 
         self.table.add_to_pot(np.append(all_stones, jokers, axis=0))
 
+    def __dict__(self):
+        return {
+            'game_id': self.game_id,
+            'players': [
+                {
+                    '_id': player._id
+                }
+                for player in self.players
+            ]
+        }
+
     def __str__(self):
-        """ String which represents :obj:``Rummikub` object when converted to :obj:`str`. """
+        """ String which represents :obj:`Game` object when converted to :obj:`str`. """
         userStones = '\n    '.join(
-            [f"Player {player._id}: {player.stones.shape[0]} stones " for player in self.players])
+            [f"Player {player._id}: {player.rack.shape[0]} stones " for player in self.players])
         return f"Pot: {self.table.pot.shape[0]} stones" \
             "Players:" + userStones
 
     def __repr__(self):
-        """ String which represents :obj:``Rummikub` object when printed out on CLI. """
+        """ String which represents :obj:`Game` object when printed out on CLI. """
         return self.__str__()
+
+    

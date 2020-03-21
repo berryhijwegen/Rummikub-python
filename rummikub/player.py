@@ -5,7 +5,7 @@ import settings
 
 
 class Player:
-    def __init__(self, _id, table):
+    def __init__(self, username, _id, table):
         """ Player initializer.
 
         Args:
@@ -15,6 +15,7 @@ class Player:
         """
         #: :obj:`int`: Identifier of player.
         self._id = _id
+        self.username = username
 
         #: ndarray of ndarray: 2D-array with stones currently on player's rack, where first element represents the number of the stone, the second elements represent the color of the stone.
         self.rack = np.empty((0, 2), dtype=np.int64)
