@@ -79,3 +79,7 @@ class Player:
                 next_set = np.append(next_set, [self.rack[index]], axis=0)
 
         self.try_set(next_set)
+
+    def __eq__(self, other): 
+        """ Check if 2 players are the same player """
+        return self.__dict__ == other.__dict__

@@ -23,7 +23,6 @@ import settings
 class Game:
     def __init__(self, max_players):
         """ Rummikub Game initializer. """
-        self.next_id = 0
         self.game_id = randint(100000, 999999)
 
         #: :obj:`Table`: Table where the game takes place.
@@ -35,9 +34,19 @@ class Game:
         #: :obj:`list` of :obj:`Player`: Players that are in the game.
         self.players = []
 
-    def add_player(self, username):
-        self.players.append(Player(self.next_id, username, self.table))
-        self.next_id += 1
+    def add_player(self, _id, username):
+        self.players.append(Player(_id, username, self.table))
+
+    def find_by_id(self, _id):
+        for player in self.players:
+            if player._id == _id:
+                return player
+        
+        return False
+
+    def remove_player(self, player):
+        """ Remove given player from game """
+        self.players.remove(player)        
 
     def start(self):
         """ Starts the game by filling the pot and giving every player a defined amount of stones. """
