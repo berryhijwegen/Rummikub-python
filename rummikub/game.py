@@ -21,7 +21,7 @@ import settings
 
 
 class Game:
-    def __init__(self, number_of_players):
+    def __init__(self, max_players):
         """ Rummikub Game initializer. """
         self.next_id = 0
         self.game_id = randint(100000, 999999)
@@ -29,6 +29,9 @@ class Game:
         #: :obj:`Table`: Table where the game takes place.
         self.table = Table()
 
+        #: :obj:`int` Maximum number of players.
+        self.max_players = max_players
+        
         #: :obj:`list` of :obj:`Player`: Players that are in the game.
         self.players = []
 

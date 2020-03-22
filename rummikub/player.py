@@ -5,7 +5,7 @@ import settings
 
 
 class Player:
-    def __init__(self, username, _id, table):
+    def __init__(self, _id, username, table):
         """ Player initializer.
 
         Args:
