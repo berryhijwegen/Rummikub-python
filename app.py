@@ -58,10 +58,15 @@ def join(username, room):
                     if not is_full(game):
                         emit('cancel_start', {'message': 'Game start is cancelled!'}, room=game.game_id)
                     if countdown == 0:
-                        emit('start', {'message': 'game_started!'}, room=game.game_id)
-            
-                print("next line is thread!")
-                socketio.start_background_task(target=countdown, game=current_room, sec=30)
+                        current_room.start()
+                        for player in current_room.players:
+                            emit('start', {
+                                'message': 'game_started!',
+                                'stones': player.rack.tolist(),
+                                'pot_size': current_room.table.pot.shape[0]
+                            }, room=player._id)
+
+                socketio.start_background_task(target=countdown, game=current_room, sec=10)
 
         else:
             emit('join_error', {

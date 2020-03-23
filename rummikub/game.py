@@ -50,6 +50,7 @@ class Game:
 
     def start(self):
         """ Starts the game by filling the pot and giving every player a defined amount of stones. """
+        self.prepare_table()
         for player in self.players:
             player.addStones(self.table.pick_stones(
                 settings.STONES_PER_PLAYER))

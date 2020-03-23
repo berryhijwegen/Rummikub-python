@@ -35,8 +35,7 @@ class Table:
         random_stones = self.pot[np.random.choice(
             self.pot.shape[0], number_of_stones, replace=False)]
 
-        for random_stone in random_stones:
-            self.pot = helpers.remove_from_arr(self.pot, random_stone)
+        self.pot = helpers.remove_from_arr(self.pot, random_stones)
 
         return random_stones
 
