@@ -1,11 +1,13 @@
 import sys, time
 sys.path.append("./rummikub")
+import threading
 
 from flask import Flask, render_template, request, copy_current_request_context
 from flask_cors import CORS
 from flask_socketio import SocketIO, join_room, emit, send
+
 from rummikub.game import Game
-import threading
+from rummikub.settings import COLOR_MAPPING
 from gevent import monkey
 monkey.patch_all()
 
@@ -45,6 +47,15 @@ def join(username, room):
             emit_enter_room(username, current_room)
             broadcast_users(room)
 
+            # REMOVE AFTER TESTING FRONT END
+            current_room.start()
+            for player in current_room.players:
+                emit('start', {
+                    'message': 'game_started!',
+                    'stones': [[stone[0], COLOR_MAPPING[stone[1]]] for stone in player.rack.tolist()],
+                    'pot_size': current_room.table.pot.shape[0]
+                }, room=player._id)
+
             if (len(current_room.players) == current_room.max_players):  
                 @copy_current_request_context
                 def countdown(game, sec):
@@ -62,7 +73,7 @@ def join(username, room):
                         for player in current_room.players:
                             emit('start', {
                                 'message': 'game_started!',
-                                'stones': player.rack.tolist(),
+                                'stones': [[stone[0], COLOR_MAPPING[stone[1]]] for stone in player.rack.tolist()],
                                 'pot_size': current_room.table.pot.shape[0]
                             }, room=player._id)
 
